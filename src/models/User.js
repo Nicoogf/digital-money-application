@@ -1,39 +1,41 @@
 import { model, models, Schema } from "mongoose";
 
 const UserSchema = new Schema({
-    name :{
-        type:String
+    name: {
+        type: String
     },
-    lastname :{
-        type:String
+    lastname: {
+        type: String
     },
-    email :{
-        type:String
+    email: {
+        type: String
     },
-    dni :{
-        type:Number
+    dni: {
+        type: Number
     },
-    rol :{
-        type:String,
+    rol: {
+        type: String,
         default: "usuario"
     },
-    dinero :{
-        type:Number,
+    dinero: {
+        type: Number,
         default: 0
     },
-    phone :{
-        type:Number
+    phone: {
+        type: Number
     },
-    password :{
-        type:String
+    password: {
+        type: String
     },
-    cbu :{
-        type:Number
+    cbu: {
+        type: Number
     },
-    alias:{
-        type:String
+    alias: {
+        type: String
     }
+}, {
+    timestamps: true
 })
 
-const User =  models.User || model("User" , UserSchema)
-export default User ;
+const User = models.User || model("User", UserSchema)
+export default User;
