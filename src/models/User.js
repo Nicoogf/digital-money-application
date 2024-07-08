@@ -8,7 +8,8 @@ const UserSchema = new Schema({
         type: String
     },
     email: {
-        type: String
+        type: String,
+        unique : [true , "El Email ya se encuentra Registrado"] 
     },
     dni: {
         type: Number

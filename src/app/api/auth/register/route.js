@@ -50,8 +50,8 @@ export async function POST(request) {
       alias: userSaved.alias,
       createdAt: userSaved.createdAt,
       updatedAt: userSaved.updatedAt
-    })
+    },{status:200})
 
   } catch (error) {
-  return NextResponse.json(error)
+  return NextResponse.json({message : error},{status: 400 })
 }}
