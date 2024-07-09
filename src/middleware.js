@@ -38,7 +38,7 @@ export async function middleware(request) {
     console.log("hasta aca llega el payload: ", payload);
 
     const response = NextResponse.next();
-    response.cookies.set('user', JSON.stringify(payload), { httpOnly: true });
+    response.cookies.set('user', JSON.stringify(payload), { httpOnly: false })
     return response;
   } catch (err) {
     return NextResponse.redirect(new URL("/login", request.url));

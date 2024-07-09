@@ -8,7 +8,7 @@ export async function GET(request , { params }) {
     console.log("El id de la tarjeta es : " , id)
 
     try {
-        const CardFound = await Card.findById(id)
+        const CardFound = await Card.findById(id).populate("user")
         if(!CardFound){
             return NextResponse.json({message: "Tarjeta no encontrada"})
         }
@@ -18,12 +18,14 @@ export async function GET(request , { params }) {
     }
 }
 
-export async function DELETE() {
+export async function DELETE(request , {params}) {
     MongoDBConnection()
     const id = params.id
+    console.log("El id de la tarjeta es : " , id)
 
-    const CardDelete = await Card.findByIdAndDelete({id})
-    if(CardDelete){
+    const CardDelete = await Card.findByIdAndDelete(id)
+    
+    if(!CardDelete){
         return NextResponse.json({
             message : "No se encontro la tarjeta para eliminarla"
         })
