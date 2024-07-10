@@ -1,18 +1,31 @@
 'use client'
+import { useAuth } from '@/context/AuthContext'
 import { registerRequest } from '@/peticiones/auth'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+
+
 const RegisterPage = () => {
-  const { register , handleSubmit } = useForm()
+  const { register , handleSubmit , formState } = useForm()
+  const { signUp , user , isAuthenticated } = useAuth()
+  const router = useRouter()
+
+  useEffect( ()  =>{
+    if(isAuthenticated) router.push("/dashboard")
+  },[isAuthenticated])
+
+  const OnSubmit =  handleSubmit(async(values) => {    
+    const registeredUser = await signUp(values)
+    console.log(isAuthenticated)
+  })
+   
+  
   return (
     <main>
 
-      <form onSubmit={handleSubmit(async(values) => {
-        console.log(values)
-        const res = await registerRequest(values)
-        console.log(res)
-      })}
+      <form onSubmit={OnSubmit}
         className='flex flex-col gap-y-2 text-black'>
         <input className='bg-blue-100 p-2 ' name="name" type='text' placeholder='Nombre'
           {...register("name", { required: true })}

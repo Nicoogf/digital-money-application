@@ -1,6 +1,6 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { AuthProvider } from "@/context/AuthContext";
 
 
 export const metadata = {
@@ -12,8 +12,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="h-[100vh] max-h-screen relative">
-        {children}
-        <Navbar />
+        <AuthProvider>        
+          {children}
+          <Navbar />
+        </AuthProvider>
       </body>
     </html>
   );
