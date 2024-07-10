@@ -11,6 +11,11 @@ export async function POST(request) {
   try {
     MongoDBConnection()
     const { name, lastname, email, dni, rol, dinero, phone, password } = await request.json()
+
+    const userFound = await User.findOne({email})
+
+    if(userFound) return NextResponse.json( ["El usuario ya existe"],{status : 400})
+
     const passwordHash = await bcrypt.hash(password, 10)
     const newUser = new User({
       name,

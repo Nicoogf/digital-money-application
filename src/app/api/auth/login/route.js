@@ -14,13 +14,13 @@ export async function POST(request) {
     const userFound = await User.findOne({email})
 
     if(!userFound){
-        return NextResponse.json({message : "El usuario no existe"},{status:400})
+        return NextResponse.json(["El usuario no existe"],{status:400})
     }
     const isMatch = await bcrypt.compare(password, userFound.password);
 
 
     if(!isMatch){
-        return NextResponse.json({message : "Credenciales Invalidas"},{status:400})
+        return NextResponse.json([ "Credenciales Invalidas"],{status:400})
     }
 
     const token = await createAccesToken({ id: userFound._id });
