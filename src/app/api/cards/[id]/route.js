@@ -24,7 +24,7 @@ export async function DELETE(request , {params}) {
     console.log("El id de la tarjeta es : " , id)
 
     const CardDelete = await Card.findByIdAndDelete(id)
-    
+
     if(!CardDelete){
         return NextResponse.json({
             message : "No se encontro la tarjeta para eliminarla"
@@ -34,12 +34,12 @@ export async function DELETE(request , {params}) {
     return NextResponse.json({message : "Tarjeta eliminada"})
 }
 
-export async function UPDATE ( request ){
+export async function PUT ( request , {params}){
     MongoDBConnection()
     const id = params.id
     const body = await request.json()
 
-    const CardUpdate  = await Card.findByIdAndUpdate({id}, body , {new : true})
+    const CardUpdate  = await Card.findByIdAndUpdate(id, body , {new : true})
     if(!CardUpdate){
         return NextResponse.json({message : "No se encontro ninguna Tarjeta"})
     }

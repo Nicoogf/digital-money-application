@@ -48,5 +48,5 @@ export async function middleware(request) {
 
 }
 export const config = {
-  matcher: ['/dashboard/:path*', '/api/cards/:path*']
+  matcher: ['/api/cards/:path*']
 }
