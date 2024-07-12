@@ -1,6 +1,6 @@
 'use client'
 import { createContext, useContext, useState } from "react"
-import { createCardRequest  } from "@/peticiones/card"
+import { createCardRequest , getCardsRequest } from "@/peticiones/card"
 const CardContext = createContext()
 
 export const useCard = () => {
@@ -13,7 +13,7 @@ if(!context){
 
 export function CardProvider ({ children }) {
 
-const [ card , setCard ] = useState([])
+const [ cards , setCard ] = useState([])
 
 const createCard = async ( card ) => {
     try {
@@ -25,8 +25,19 @@ const createCard = async ( card ) => {
    
 }
 
+const getCards = async()=> {
+    try {
+        const res = await getCardsRequest()
+        setCard(res.data)
+        console.log(res)
+    } catch (error) {
+        console.log(error)
+    }
+ 
+}
+
 return(
-    <CardContext.Provider value = {{card, createCard}}>
+    <CardContext.Provider value = {{cards, createCard, getCards}}>
          { children }
     </CardContext.Provider>
 )

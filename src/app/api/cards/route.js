@@ -8,48 +8,23 @@ import { TOKEN_SECRET } from "@/libs/config";
 export async function GET(request) {
     //Muestra todas las tarjetas
     MongoDBConnection()
-    const userCookie = request.cookies.get('user');
-    const { value } = userCookie   
-        const newValue = JSON.parse(value) 
-        const {id} = newValue
-        console.log(id)
+    const userCookie = request.cookies.get('token');
+    if (!userCookie) {
+        return NextResponse.json({ message: "El usuario no esta AUTENTICADO" }, { status: 401 });
+    }
+    const { value } = userCookie;
+    console.log("El valor de value" , value)
+
+    const { payload } = await jwtVerify(value , new TextEncoder().encode(TOKEN_SECRET))
+    console.log("Viene de backend" , payload)
+
+    const { id } = payload;
+    
     const cards = await Card.find({user: id}).populate("user")
     return NextResponse.json( cards )   
 }
 
-// export async function POST (request ){
-//     //crear una tarjeta 
-//     MongoDBConnection()
-//     const { name , codeSegurity , serial , vto , mount , user } = await request.json()
-    
-//     try {
-     
-//     const userCookie = request.cookies.get('user');
-//         console.log("Cookie user:", userCookie);
-//         const { value } = userCookie
-//         console.log("el value es : " , value )
-//         const newValue = JSON.parse(value)
-//         console.log(newValue)
-//         const {id} = newValue
-//         console.log(id)
-       
-       
-//         const newCard = new Card({
-//             name ,
-//             codeSegurity ,
-//             serial , 
-//             vto,
-//             mount,
-//             user: id   
-//         })
-    
-//         const savedCard = await newCard.save() 
-//         return NextResponse.json(savedCard)
-//     } catch (error) {
-//         return NextResponse.json({error})
-//     }
-   
-// }
+
 export async function POST(request) {
     try {
       MongoDBConnection();
