@@ -1,6 +1,6 @@
 'use client'
 import { createContext, useContext, useState } from "react"
-
+import { createCardRequest  } from "@/peticiones/card"
 const CardContext = createContext()
 
 export const useCard = () => {
@@ -15,8 +15,14 @@ export function CardProvider ({ children }) {
 
 const [ card , setCard ] = useState([])
 
-const createCard = async (card ) => {
-    console.log("Nueva tarea creada")
+const createCard = async ( card ) => {
+    try {
+        const res = await createCardRequest(card)
+        console.log( "el res data del context : " , res )    
+    } catch (error) {
+        console.log(error)
+    }
+   
 }
 
 return(

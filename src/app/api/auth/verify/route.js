@@ -11,8 +11,7 @@ const token = request.cookies.get("token");
   if (!token) return NextResponse.json({ message: "no autorizado" }, { status: 400 });
 
   try {
-    const user = jwt.verify(token.value, TOKEN_SECRET);
-    console.log("Archivo verify :", user);
+    const user = jwt.verify(token.value, TOKEN_SECRET);  
 
     const userFound = await User.findById(user.id);
     if (!userFound) return NextResponse.json({ message: "No autorizado" }, { status: 400 });

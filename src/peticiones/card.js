@@ -1,8 +1,8 @@
-import axios from "axios" ;
+import axios from "./axios"
 
 export const getCardsRequest = () => axios.get("/cards")
 
-export const getCardsRequests = ( id ) => axios.get(`/cards/${id}`)
+export const getCardRequest = ( id ) => axios.get(`/cards/${id}`)
 
 export const createCardRequest = ( card ) => axios.post("/cards" , card )
 

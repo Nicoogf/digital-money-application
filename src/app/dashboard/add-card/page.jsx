@@ -1,18 +1,24 @@
 'use client'
 
+import { useAuth } from '@/context/AuthContext'
 import { useCard } from '@/context/CardContext'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
 
 const AddCardPage = () => {
+
+    const { user, loading, isAuthenticated } = useAuth()
+    console.log("El usuario es: ", user, "¿Está cargando? :", loading)
     const { register , handleSubmit } = useForm()
     const { card , createCard} = useCard()
     console.log("El listado actual de Tarjetas :" , card)
+
     const onSubmit = handleSubmit((data)=>{
-        console.log(createCard)
+        console.log(data)
+        createCard(data)
     })
-    console.log(createCard())
+
     return (
         <main className='relative flex flex-col items-center justify-center h-screen '>
             <h1> Agregar una tarjeta nueva </h1>

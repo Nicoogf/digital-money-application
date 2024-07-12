@@ -12,10 +12,9 @@ export async function middleware(request) {
       return NextResponse.redirect(new URL("/login", request.url))
     }
     
-    try {
-      console.log(token)
+    try {      
       const { payload } = await jwtVerify(token.value , new TextEncoder().encode(TOKEN_SECRET))
-      console.log(payload)
+      console.log("Viene de middleware.js" , payload)
       return NextResponse.next()
     } catch (error) {
       console.log(error)
