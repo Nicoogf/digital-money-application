@@ -1,6 +1,7 @@
 'use client'
 import { useAuth } from '@/context/AuthContext'
 import { registerRequest } from '@/peticiones/auth'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -76,6 +77,9 @@ const RegisterPage = () => {
           {errors.confirmPassword && <div className='text-white bg-red-500'> La Confirmacion es requerida </div>}
 
           <button className='bg-red-500 text-white p-2' type='submit'> Registrar </button>
+          <p className='text-white'> ¿Ya tienes una cuenta? 
+         <Link href="/login"> Inicia Sesion </Link>
+      </p>
 
       </form>
     </main>
@@ -83,3 +87,5 @@ const RegisterPage = () => {
 }
 
 export default RegisterPage
+
+//2:55

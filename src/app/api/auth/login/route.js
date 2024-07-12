@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { createAccesToken } from "@/libs/jwt";
 
+
 export async function POST(request) {
   try {
     MongoDBConnection()
@@ -20,23 +21,24 @@ export async function POST(request) {
 
 
     if(!isMatch){
-        return NextResponse.json([ "Credenciales Invalidas"],{status:400})
+        return NextResponse.json(["Credenciales Invalidas"],{status:400})
     }
 
     const token = await createAccesToken({ id: userFound._id });
 
     // Establecer la cookie
     cookies().set("token", token, {
-      httpOnly: true,
+      // httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 60 * 60 * 24, // 1 day
-      path: '/'
+      path: '/'   
     });        
 
     // Datos que va a usar el Frontend
     return NextResponse.json({
       id: userFound._id,
       name: userFound.name,
+      lastname : userFound.lastname,
       email: userFound.email,
       dni: userFound.dni,
       rol: userFound.rol,

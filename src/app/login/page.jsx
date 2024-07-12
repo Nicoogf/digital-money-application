@@ -1,5 +1,6 @@
 'use client'
 import { useAuth } from '@/context/AuthContext'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -7,7 +8,12 @@ import { useForm } from 'react-hook-form'
 const LoguinPage = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
-  const { signIn, errors: signInErrors } = useAuth()
+  const { signIn, errors: signInErrors , isAuthenticated } = useAuth()
+  const router = useRouter()
+
+  useEffect( ()  =>{
+    if(isAuthenticated) router.push("/dashboard")
+  },[isAuthenticated])
 
   const OnSubmit = handleSubmit(async(data) => {
     const res = await signIn(data)
@@ -38,6 +44,10 @@ const LoguinPage = () => {
         <button className='bg-red-500 text-white p-2' type='submit'> Ingresar </button>
 
       </form>
+
+      <p> ¿No tienes una cuenta ? 
+        <Link href="/register"> Ingresa aca </Link>
+      </p>
     </main>
   )
 }
