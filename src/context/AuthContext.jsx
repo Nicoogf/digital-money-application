@@ -3,8 +3,11 @@
 import { loguinRequest, registerRequest , verifyToken } from "@/peticiones/auth";
 import { createContext , useState , useContext, useEffect} from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const AuthContext = createContext()
+
+
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
@@ -20,6 +23,7 @@ export const AuthProvider = ({children})=> {
     const [ isAuthenticated , setIsAuthenticated ] = useState(false)
     const [ errors , setError ] = useState([])
     const [ loading, setLoading ] = useState( true )
+    const router = useRouter()
 
     const signUp = async( user ) => {
 
@@ -49,6 +53,12 @@ export const AuthProvider = ({children})=> {
             setIsAuthenticated(false)
             setError(error.response.data)
         }
+    }
+
+    const logout = () =>{
+        Cookies.remove("token")
+        setIsAuthenticated(false)
+        setUser(null)
     }
 
     useEffect(()=> {
@@ -93,7 +103,7 @@ export const AuthProvider = ({children})=> {
     
 
 return(
-    <AuthContext.Provider value={{signUp , user , isAuthenticated , errors , signIn , loading}}>
+    <AuthContext.Provider value={{signUp , user , isAuthenticated , errors , signIn , loading, logout}}>
         {children}
     </AuthContext.Provider>
 )
