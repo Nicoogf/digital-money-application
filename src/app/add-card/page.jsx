@@ -4,11 +4,13 @@ import { useAuth } from '@/context/AuthContext'
 import { useCard } from '@/context/CardContext'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 
 const AddCardPage = () => {
 
     const { user, loading, isAuthenticated } = useAuth()
+    const router = useRouter()
     console.log("El usuario es: ", user, "¿Está cargando? :", loading)
     const { register , handleSubmit } = useForm()
     const { card , createCard} = useCard()
@@ -17,6 +19,8 @@ const AddCardPage = () => {
     const onSubmit = handleSubmit((data)=>{
         console.log(data)
         createCard(data)
+        router.push("/dashboard")
+        
     })
 
     return (
