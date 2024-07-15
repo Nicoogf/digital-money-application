@@ -39,8 +39,8 @@ const RegisterPage = () => {
 
         {errors.name && <div className='text-white bg-red-500'> El nombre es requerido </div>}
 
-        <input className='bg-blue-100 p-2' name="lastName" type='text' placeholder='Apellido'
-          {...register("lastName", { required: true })} />
+        <input className='bg-blue-100 p-2' name="lastname" type='text' placeholder='Apellido'
+          {...register("lastname", { required: true })} />
 
         {errors.lastName && <div className='text-white bg-red-500'>  El Apellido es requerido </div>}
 

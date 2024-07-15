@@ -3,8 +3,6 @@ import { useAuth } from '@/context/AuthContext'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { useCard } from '@/context/CardContext'
-import { tacharNumero } from '@/utils/tacharNumero'
 
 const Dashboard = () => {
 
@@ -24,7 +22,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1> Ingresaste al perfil de </h1>
-      <h2> {user?.name} - {user?.alias}</h2>
+      <h2> {user?.name} - {user?.lastname}</h2>
       <section>
         <p> $ { user?.dinero }</p>
         <Link  href="/cards" className='bg-slate-700 p-2 rounded-md text-white'> Ver tarjetas </Link>

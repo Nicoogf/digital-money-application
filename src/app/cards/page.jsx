@@ -9,7 +9,7 @@ import React, { useEffect } from 'react'
 const CardPage = () => {
     const router = useRouter()
     const { user, loading, isAuthenticated } = useAuth()
-    const { getCards, cards } = useCard()
+    const { getCards, cards , deleteCard } = useCard()
 
     useEffect(() => {
         if (!loading && !isAuthenticated) {
@@ -27,21 +27,30 @@ const CardPage = () => {
 
     return (
         <main className='relative flex flex-col items-center justify-center h-screen '>
-            <section>
+            <section className=''>
                 <h5> Lista de Tarjetas agregadas</h5>
-                <section className='flex flex-row gap-x-4'>
+                <section className='flex flex-row gap-x-4 w-[350px] overflow-x-scroll scrolling bg-violet-300 p-4'>
 
                     { cards.length === 0 ? 
                     <h5> No hay tarjetas ingresadas</h5> :  
                     cards.map((card, i) => (
-                        <article key={i} className='bg-red-400 rounded-lg w-[200px] py-4 '>
+                        <article key={i} className='bg-red-400 rounded-lg w-[350px]'>
                             {card.name}
                             <p> {tacharNumero(card.serial)} </p>
+                            <div className='flex flex-row'>
+                                <button className='bg-lime-700 p-2 rounded-md text-white gap-x-2'>
+                                    Editar
+                                </button>
+                                 <button onClick={()=> {deleteCard(card._id)}}
+                                 className='bg-lime-700 p-2 rounded-md text-white'>
+                                    Eliminar
+                                </button>
+                            </div>
                         </article>
-                    ))}
-                    <Link href="/add-card" className='text-blue-500'> Agregar Tarjeta </Link>
+                    ))}                  
                    
                 </section>
+                <Link href="/add-card" className='text-blue-500'> Agregar Tarjeta </Link>
               </section>
         </main>
     )

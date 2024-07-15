@@ -1,6 +1,6 @@
 'use client'
 import { createContext, useContext, useState } from "react"
-import { createCardRequest , getCardsRequest } from "@/peticiones/card"
+import { createCardRequest , getCardsRequest , deleteCardRequest} from "@/peticiones/card"
 const CardContext = createContext()
 
 export const useCard = () => {
@@ -36,8 +36,19 @@ const getCards = async()=> {
  
 }
 
+const deleteCard = async(id) => {
+    try {
+        const res = await deleteCardRequest(id)
+        console.log(res)
+       if(res.status === 200) setCard(cards.filter(task => task._id !== id))
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 return(
-    <CardContext.Provider value = {{cards, createCard, getCards}}>
+    <CardContext.Provider value = {{cards, createCard, getCards, deleteCard}}>
          { children }
     </CardContext.Provider>
 )
