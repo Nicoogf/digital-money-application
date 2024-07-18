@@ -6,7 +6,7 @@ export async function middleware(request) {
 
   const token = request.cookies.get("token")
 
-  if (request.nextUrl.pathname.includes("/dashboard")) {
+  if (request.nextUrl.pathname.includes("/dashboard") ) {
     if( token === undefined){
       console.log("No hay token fue redireccionado al loguin")
       return NextResponse.redirect(new URL("/login", request.url))
@@ -26,22 +26,3 @@ export async function middleware(request) {
 }
 
 
-
-
-
-// if (!token) {
-//   return NextResponse.json({ message: "No autorizado" },{status:400})
-// }
-
-
-// try {
-//   const secret = new TextEncoder().encode(TOKEN_SECRET);
-//   const { payload } = await jwtVerify(token.value, secret);
-//   console.log("hasta aca llega el payload: ", payload);
-
-//   const response = NextResponse.next();
-//   response.cookies.set('user', JSON.stringify(payload), { httpOnly: false })
-//   return response;
-// } catch (err) {
-//   return NextResponse.redirect(new URL("/login", request.url));
-// }

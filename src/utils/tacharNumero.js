@@ -1,4 +1,4 @@
-export const  tacharNumero = (numero)  => {
+export const tacharNumero = (numero)  => {
         // Convertir el número a string para poder manipular los caracteres
         const numStr = numero.toString();
       
@@ -9,3 +9,14 @@ export const  tacharNumero = (numero)  => {
         return ocultos + visibles;
   }
   
+
+  export function lastFourNumbers(number) {
+      // Convertimos el número a una cadena
+      const numberStr = number.toString();
+      
+      // Obtenemos los últimos 4 caracteres de la cadena
+      const lastFourDigits = numberStr.slice(-4);
+      
+      // Convertimos la cadena de vuelta a un número y lo devolvemos
+      return parseInt(lastFourDigits, 10);
+    }

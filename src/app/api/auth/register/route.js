@@ -10,7 +10,8 @@ import { createAccesToken } from "@/libs/jwt";
 export async function POST(request) {
   try {
     MongoDBConnection()
-    const { name, lastname, email, dni, rol, dinero, phone, password } = await request.json()
+    // const { name, lastname, email, dni, rol, dinero, phone, password } = await request.json()
+    const { name, lastname, email, dni, rol, dinero, phone, password ,companyName ,businessField ,cuit } = await request.json()
 
     const userFound = await User.findOne({email})
 
@@ -25,6 +26,12 @@ export async function POST(request) {
       rol,
       dinero,
       phone,
+
+      companyName ,
+      businessField ,
+      cuit,
+
+
       password: passwordHash,
       cbu: GenerarCBU(),
       alias: GenerarAlias(palabras)
@@ -54,6 +61,11 @@ export async function POST(request) {
       phone: userSaved.phone,
       cbu: userSaved.cbu,
       alias: userSaved.alias,
+
+      companyName: userSaved.companyName,
+      businessField : userSaved.businessField,
+      cuit: userSaved.cuit ,
+
       createdAt: userSaved.createdAt,
       updatedAt: userSaved.updatedAt
     },{status:200})

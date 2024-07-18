@@ -23,6 +23,7 @@ export const AuthProvider = ({children})=> {
     const [ isAuthenticated , setIsAuthenticated ] = useState(false)
     const [ errors , setError ] = useState([])
     const [ loading, setLoading ] = useState( true )
+
     const router = useRouter()
 
     const signUp = async( user ) => {
@@ -60,6 +61,8 @@ export const AuthProvider = ({children})=> {
         setIsAuthenticated(false)
         setUser(null)
     }
+
+  
 
     useEffect(()=> {
         if(errors.length > 0 ){
@@ -103,7 +106,7 @@ export const AuthProvider = ({children})=> {
     
 
 return(
-    <AuthContext.Provider value={{signUp , user , isAuthenticated , errors , signIn , loading, logout}}>
+    <AuthContext.Provider value={{signUp , user , isAuthenticated , errors , signIn , loading, logout  }}>
         {children}
     </AuthContext.Provider>
 )

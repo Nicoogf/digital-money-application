@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  background-color: rgb(18, 33, 53);
-  color:white;
+main{
+  position: relative;
+  z-index: 9999;
+  position: relative;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}

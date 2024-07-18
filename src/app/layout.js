@@ -1,7 +1,10 @@
-import "./globals.css";
-import Navbar from "@/components/Navbar";
+
 import { AuthProvider } from "@/context/AuthContext";
+import "./globals.css";
+import { Background } from "@/components/background/Background";
 import { CardProvider } from "@/context/CardContext";
+import { TransactionProvider } from "@/context/TransContext";
+
 
 
 export const metadata = {
@@ -11,14 +14,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="h-[100vh] max-h-screen relative">
+    <html lang="es">
+      <body className="h-screen max-h-screen flex items-center justify-center">
         <AuthProvider>
-          <CardProvider>                
-            {children}
-          </CardProvider>   
-          <Navbar />
-        </AuthProvider>
+          <CardProvider>
+            <TransactionProvider>
+              <main className="rounded-xl w-[95%] max-w-[1920px] h-[calc(100vh-40px)] mx-auto bg-gray-900 text-white flex flex-col justify-center relative">
+                {children}
+              </main>
+              <Background />
+            </TransactionProvider>
+          </CardProvider >
+        </AuthProvider >
       </body>
     </html>
   );

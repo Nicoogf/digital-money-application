@@ -1,14 +1,16 @@
 'use client'
 import { useAuth } from '@/context/AuthContext'
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-const Dashboard = () => {
 
+import React, { useEffect } from 'react'
+
+const DashboarPage = () => {
   const router = useRouter()
   const { user, loading, isAuthenticated } = useAuth()
-  console.log("El usuario es: ", user, "¿Está cargando? :", loading)
+  console.log(user)
 
   useEffect(() => {
     if (!loading && !isAuthenticated && !user) {
@@ -16,20 +18,98 @@ const Dashboard = () => {
     }
   }, [loading, isAuthenticated, router])
 
-
-  if (loading) return <h1>La página está cargando</h1>
-  
   return (
-    <div>
-      <h1> Ingresaste al perfil de </h1>
-      <h2> {user?.name} - {user?.lastname}</h2>
-      <section>
-        <p> $ { user?.dinero }</p>
-        <Link  href="/cards" className='bg-slate-700 p-2 rounded-md text-white'> Ver tarjetas </Link>
+    <>
+       <h3 className='w-[80%] max-w-[595px] mx-auto my-6 font-semibold text-lg'> Bienvenido , {user?.name} a Digital Money </h3>
+
+      <section className=' w-[80%] max-w-[595px] mx-auto bg-gray-800 rounded-md p-4 mt-2'>
+
+        <div className=' flex flex-row justify-end gap-x-4 mr-4 p-2 '>
+          <Link href="/dashboard/cards"> Ver tarjetas </Link>
+          <Link href="/cards"> Ver CVU </Link>
+        </div>
+
+        <div className="ml-4 -mt-3">
+          <h3 className='text-sm'> Dinero disponible </h3>
+          <p className='text-4xl font-bold'> $ {user?.dinero}</p>
+        </div>
+
       </section>
-      <Link href = "/add-card" className='text-blue-500 decoration-slice'> Agregar Targeta </Link>
-    </div>
+
+
+      <section className='flex flex-col gap-y-2 mt-4 w-[80%] max-w-[595px]  mx-auto py-4'>
+        <Link href="/dashboard/send" className='bg-lime-500 py-3 text-lime-950 font-semibold rounded-md text-center'> Transferir dinero </Link>
+        <Link href="/dashboard/services" className='bg-lime-500 py-3 text-lime-950 font-semibold rounded-md text-center'> Pagar Servicios  </Link>
+        <Link href="/dashboard/deposit" className='bg-lime-500 py-3 text-lime-950 font-semibold rounded-md text-center'> Ingresar Dinero  </Link>
+      </section>
+
+      <section className='w-[80%] max-w-[595px] mx-auto'>
+
+
+       <section>
+          <input placeholder="Buscar por actividad " className='bg-gray-700 block w-full mx-auto mt-4 text-lime-500 p-2 outline-none rounded-md' />
+
+          <div >
+            <h4 className='font-bold my-2'> Tu actividad </h4>
+
+            <section className='w-full h-[260px] rounded-md p-2 flex flex-col gap-4 overflow-hidden overflow-y-scroll'>
+
+              <article className='flex flex-row justify-between items-center bg-gray-700 p-2 rounded-md'>
+                <div className='flex flex-row items-center gap-x-2'>
+                  <h4 className='bg-lime-500 py-1 px-2 rounded-xl'> TC </h4>
+                  <h4> Tito calderon</h4>
+                </div>
+                <h4> $ 2,548 </h4>
+
+              </article>
+
+              <article className='flex flex-row justify-between items-center bg-gray-700 p-2 rounded-md'>
+                <div className='flex flex-row items-center gap-x-2'>
+                  <h4 className='bg-lime-500 py-1 px-2 rounded-xl'> TC </h4>
+                  <h4> Tito calderon</h4>
+                </div>
+                <h4> $ 2,548 </h4>
+
+              </article>
+
+              <article className='flex flex-row justify-between items-center bg-gray-700 p-2 rounded-md'>
+                <div className='flex flex-row items-center gap-x-2'>
+                  <h4 className='bg-lime-500 py-1 px-2 rounded-xl'> TC </h4>
+                  <h4> Tito calderon</h4>
+                </div>
+                <h4> $ 2,548 </h4>
+
+              </article>
+
+              <article className='flex flex-row justify-between items-center bg-gray-700 p-2 rounded-md'>
+                <div className='flex flex-row items-center gap-x-2'>
+                  <h4 className='bg-lime-500 py-1 px-2 rounded-xl'> TC </h4>
+                  <h4> Tito calderon</h4>
+                </div>
+                <h4> $ 2,548 </h4>
+
+              </article>
+
+              <article className='flex flex-row justify-between items-center bg-gray-700 p-2 rounded-md'>
+                <div className='flex flex-row items-center gap-x-2'>
+                  <h4 className='bg-lime-500 py-1 px-2 rounded-xl'> TC </h4>
+                  <h4> Tito calderon</h4>
+                </div>
+                <h4> $ 2,548 </h4>
+
+              </article>
+
+
+            </section>
+
+
+          </div>
+          <Link href="/" className='text-sm block w-[80%] mx-auto mt-4 text-end text-blue-400'> Ver toda la actividad </Link>
+       </section>
+
+      </section>
+    </>
   )
 }
 
-export default Dashboard
+export default DashboarPage
