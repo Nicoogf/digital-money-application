@@ -8,7 +8,7 @@ const MovementSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['deposit', 'transfer', 'receive'],
+    enum: ['deposit', 'pay', 'receive' ,"transferir"],
     required: true
   },
   amount: {

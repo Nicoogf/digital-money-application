@@ -3,10 +3,17 @@ import { useAuth } from '@/context/AuthContext'
 import Link from 'next/link'
 import React from 'react'
 import { FaRegCopy } from 'react-icons/fa'
+import { useRouter } from 'next/navigation'
 
 
 const LoguinPage  = () => {
-  const { user} = useAuth()
+  const { user , logout } = useAuth()
+  const router = useRouter()
+
+  const closeSesion = () => {
+    logout()
+    router.push("/login")
+  }
 
   return (
     <>
@@ -83,6 +90,8 @@ const LoguinPage  = () => {
         </div>
     </article>
     </section>
+
+    <button className='block w-[80%] mx-auto bg-greenlime text-lime-950 font-semibold rounded-md p-4 mt-2' onClick={closeSesion}> Cerrar Sesion </button>
 
   
 

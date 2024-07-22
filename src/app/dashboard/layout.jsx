@@ -44,7 +44,7 @@ const LayoutPage = ({ children }) => {
         <Link href="/dashboard/movements"> Actividad </Link>
         <Link href="/dashboard/profile"> Tu Perfil </Link>
         <Link href="/dashboard/deposit"> Cargar Dinero </Link>
-        <Link href="/"> Pagar Servicio </Link>
+        <Link href="/dashboard/servicios"> Pagar Servicio </Link>
         <Link href="/dashboard/cards"> Tarjetas </Link>
         <Link href="/"> Cerrar Sesion </Link>
       </nav>

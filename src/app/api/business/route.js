@@ -13,7 +13,6 @@ export async function GET() {
     // }
     
     const listado = await User.find({rol: "Empresa"})
-    console.log(listado)
     return NextResponse.json( listado )   
     } catch (error) {
      console.log(error)   

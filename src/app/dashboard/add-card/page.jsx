@@ -20,7 +20,6 @@ const AddCardPage = () => {
         console.log(data)
         createCard(data)
         router.push("/dashboard/cards")
-        
     })
 
     return (

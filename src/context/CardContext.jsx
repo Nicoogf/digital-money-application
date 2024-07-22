@@ -22,7 +22,6 @@ export function CardProvider({ children }) {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     const getCards = async () => {
