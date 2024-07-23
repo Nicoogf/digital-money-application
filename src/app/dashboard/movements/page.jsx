@@ -1,6 +1,7 @@
 'use client'
 import { useTransaction } from '@/context/TransContext'
 import { formatDate } from '@/utils/Fechas'
+import { formatCurrency } from '@/utils/VerPrecio'
 import React, { useEffect } from 'react'
 
 const MovementsPage = () => {
@@ -10,8 +11,6 @@ const MovementsPage = () => {
         getMoves()
     }, [])
 
-
-    console.log(moves)
     return (
         <div>
             <h2> Movimientos </h2>
@@ -24,7 +23,7 @@ const MovementsPage = () => {
                         </div>
                         <div className='flex flex-col'>
                         <h6> {formatDate(movimiento?.date)}</h6>
-                        <h6> ${movimiento?.amount}</h6>
+                        <h6> $ { formatCurrency (movimiento?.amount) }</h6>
                         </div>
                        
                     </article>

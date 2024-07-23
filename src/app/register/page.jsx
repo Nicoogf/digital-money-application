@@ -95,23 +95,28 @@
 
 'use client'
 import { useAuth } from '@/context/AuthContext'
+import { set } from 'mongoose'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const RegisterPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } , watch} = useForm();
   const { signUp, user, isAuthenticated, errors: RegisterErrors } = useAuth();
   const router = useRouter();
   const [role, setRole] = useState('Usuario')
 
-  useEffect(() => {
-    if (isAuthenticated) router.push("/dashboard");
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) router.push("/dashboard");
+  // }, [isAuthenticated]);
 
   const OnSubmit = handleSubmit(async (values) => {
     const registeredUser = await signUp(values);
+    console.log("El registered User es : " ,registeredUser )
+    if(registeredUser){
+      router.push("/login")
+    }  
     console.log(isAuthenticated);
   });
 
@@ -124,8 +129,16 @@ const RegisterPage = () => {
     console.log(role)
   }, [role, setRole])
 
+
+ 
+
   return (
     <>
+
+     {RegisterErrors.map((error, i) => (
+        <div key={i} className='w-full absolute top-0 bg-red-700 text-center '> {error} </div>
+      ))}
+
 
       <h1 className='text-lg font-semibold text-center'> Registro de Usuario </h1>
       <h2 className=''> Configuracion Actual : {role} </h2>
@@ -232,13 +245,18 @@ const RegisterPage = () => {
 
 
             <input className='bg-gray-700 p-2 rounded-md outline-none' name="confirmPassword" type='password' placeholder='Confirmar Contraseña'
-              {...register("confirmPassword", { required: true })} />
+               {...register("confirmPassword", { 
+                required: "La confirmación es requerida",
+                validate: value => value === password || "Las contraseñas no coinciden"
+              })} />
 
             {errors.confirmPassword && <div className='text-white bg-red-500'> La Confirmacion es requerida </div>}
           </>
         )}
 
-        <button className='bg-lime-600 text-white p-2 rounded-md' type='submit'> Registrar </button>
+        <button className='bg-lime-600 text-white p-2 rounded-md' type='submit'> 
+          Registrar 
+        </button>
                 <p className='text-white'> ¿Ya tienes una cuenta?
           <Link href="/login"> Inicia Sesion </Link>
         </p>

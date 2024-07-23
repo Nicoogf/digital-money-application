@@ -4,6 +4,7 @@ import { lastFourNumbers } from "@/utils/tacharNumero";
 import User from "@/models/User";
 import Card from "@/models/Cards";
 import Movement from "@/models/Movement";
+import { TransactionType } from "@/utils/enum";
 
 
 
@@ -48,7 +49,7 @@ export async function POST(request) {
         const depositMovement = new Movement({
             userId: userFound._id,
             amount: transValue,
-            type: "deposit",
+            type: TransactionType.PAYMENT_RECEIVED ,
             details: `Pago recibido del cliente ${username} ${userlastname}`
         });
         await depositMovement.save();
@@ -57,7 +58,7 @@ export async function POST(request) {
         const paymentMovement = new Movement({
             userId: user_id,
             amount: transValue,
-            type: "pay",
+            type: TransactionType.PAYMENT_SENT,
             details: `Pago de Servicio ${userFound.companyName}`
         });
         await paymentMovement.save();

@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useCard } from '@/context/CardContext'
 import { useTransaction } from '@/context/TransContext'
+import { formatCurrency } from '@/utils/VerPrecio'
+
 
 
 const DepositPage = () => {
@@ -52,7 +54,7 @@ const DepositPage = () => {
             {cards.map((card, i) => (
               <label key={i} class="flex items-center justify-between">
                 <span class="ml-2 text-gray-700">{card.name}</span>
-                <span className='text-white'> $ {card.mount } </span>
+                <span className='text-white'> $ { formatCurrency(card.mount) } </span>
                 <input type="radio" id={`rol-${card.name}`} name="rol" value={card._id} class="hidden-input" {...register("card", { required: true })} />
               </label>
             ))}

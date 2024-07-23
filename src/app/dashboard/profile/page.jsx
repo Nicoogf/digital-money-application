@@ -1,9 +1,12 @@
 'use client'
 import { useAuth } from '@/context/AuthContext'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaRegCopy } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+import toast, { Toaster } from 'react-hot-toast';
+
 
 
 const LoguinPage  = () => {
@@ -12,7 +15,7 @@ const LoguinPage  = () => {
 
   const closeSesion = () => {
     logout()
-    router.push("/login")
+    router.push("/")
   }
 
   return (
@@ -70,7 +73,9 @@ const LoguinPage  = () => {
 
     <section className=' w-[80%] mx-auto bg-gray-800 rounded-md p-4 mt-2'>
     <h3 className='font-semibold'> Copia tu cvu o alias para ingresar o transferir dinero desde otra cuenta</h3>
-    <article className='flex flex-row justify-between items-center my-4'>
+   
+    <CopyToClipboard text={user?.cbu}>
+    <article className='flex flex-row justify-between items-center my-4 cursor-pointer' onClick={()=> toast.success("CBU copiado en el Portapapeles")}>
         <div className='flex flex-col'>
             <h5 className='font-bold text-lime-500'> CVU </h5>
             <h6> {user?.cbu} </h6>
@@ -79,8 +84,10 @@ const LoguinPage  = () => {
             <FaRegCopy  className='text-lime-500'/>
         </div>
     </article>
+    </CopyToClipboard>
 
-    <article className='flex flex-row justify-between items-center my-4'>
+    <CopyToClipboard text={user?.alias}>
+    <article className='flex flex-row justify-between items-center my-4 cursor-pointer' onClick={()=> toast.success("Alias copiado en el Portapapeles")}>
         <div className='flex flex-col'>
             <h5 className='font-bold text-lime-500'> Alias </h5>
             <h6> {user?.alias} </h6>
@@ -89,13 +96,15 @@ const LoguinPage  = () => {
             <FaRegCopy  className='text-lime-500'/>
         </div>
     </article>
+    </CopyToClipboard>
+
     </section>
 
     <button className='block w-[80%] mx-auto bg-greenlime text-lime-950 font-semibold rounded-md p-4 mt-2' onClick={closeSesion}> Cerrar Sesion </button>
 
   
 
-
+<Toaster />
 </>
   )
 }

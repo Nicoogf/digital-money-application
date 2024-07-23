@@ -4,6 +4,8 @@ import User from "@/models/User";
 import Card from "@/models/Cards";
 import Movement from "@/models/Movement";
 import { lastFourNumbers } from "@/utils/tacharNumero";
+import { TransactionType } from "@/utils/enum";
+
 
 
 export async function POST(request) {
@@ -40,7 +42,7 @@ export async function POST(request) {
     const depositMovement = new Movement({
         userId: userFound._id,
         amount: trans_value,
-        type: "deposit",
+        type: TransactionType.DEPOSIT_COMPLETED,
         details: `Depósito desde tarjeta ${lastFourNumbers(cardFound.serial)}`        
       })
 

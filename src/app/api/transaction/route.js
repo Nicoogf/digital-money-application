@@ -1,7 +1,9 @@
 import Movement from "@/models/Movement";
 import User from "@/models/User";
+import { TransactionType } from "@/utils/enum";
 import { MongoDBConnection } from "@/utils/mongobd";
 import { NextResponse } from "next/server";
+
 
 export async function POST(request) {
   try {
@@ -49,18 +51,25 @@ export async function POST(request) {
 
     const senderMovement = new Movement({
       userId: id_user_sender,
-      type: 'transferir',
+      type: TransactionType.TRANSFER_SENT,
       amount: trans_value,
       details: `Transferencia a ${userReceiver.name}`
     });
 
-    console.log("EL MOVIMIENTO DEL QUE ENVIAR" , senderMovement)
+    console.log("EL MOVIMIENTO DEL QUE ENVIA El dinero" , {senderMovement})
     await senderMovement.save();
 
 
-    const receiverMovement = new Movement({
-      userId: userReceiver._id,
+    const id_user_reciber = userReceiver._id.toString()
+    
+    console.log({ userId: id_user_reciber,
       type: 'receive',
+      amount: trans_value,
+      envia: senderMovement.name})
+
+    const receiverMovement = new Movement({
+      userId: id_user_reciber,
+      type: TransactionType.TRANSFER_RECEIVED,
       amount: trans_value,
       details: `Recepción de ${userSender.name}`
     });

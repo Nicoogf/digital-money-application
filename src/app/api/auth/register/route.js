@@ -11,12 +11,19 @@ export async function POST(request) {
   try {
     MongoDBConnection()
     // const { name, lastname, email, dni, rol, dinero, phone, password } = await request.json()
-    const { name, lastname, email, dni, rol, dinero, phone, password ,companyName ,businessField ,cuit } = await request.json()
+    const { name, lastname, email,number, dni, rol, dinero, phone, password ,companyName ,businessField ,cuit ,confirmPassword} = await request.json()
 
     const userFound = await User.findOne({email})
 
     if(userFound) return NextResponse.json( ["El usuario ya existe"],{status : 400})
 
+    if(typeof(dni) === number){
+      return NextResponse.json( ["El Documento debe ser un numero de 7 Digitos"],{status : 400})
+    }
+
+    if(password !== confirmPassword){
+      return NextResponse.json( ["Las contraseñas no coinciden"],{status : 400})
+    }
     const passwordHash = await bcrypt.hash(password, 10)
     const newUser = new User({
       name,
@@ -26,7 +33,6 @@ export async function POST(request) {
       rol,
       dinero,
       phone,
-
       companyName ,
       businessField ,
       cuit,
@@ -42,12 +48,12 @@ export async function POST(request) {
     const token = await createAccesToken({ id: userSaved._id });
 
     // Establecer la cookie
-    cookies().set("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24, // 1 day
-      path: '/'
-    });        
+    // cookies().set("token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
+    //   maxAge: 60 * 60 * 24, // 1 day
+    //   path: '/'
+    // });        
 
     // Datos que va a usar el Frontend
     return NextResponse.json({

@@ -11,12 +11,18 @@ import Link from 'next/link'
 const LayoutPage = ({ children }) => {
 
   const router = useRouter()
-  const { user, loading, isAuthenticated } = useAuth()
+  const { user, loading, isAuthenticated , logout } = useAuth()
   console.log("El usuario es: ", user, "¿Está cargando? :", loading)
+
+  const closeSesion = () => {
+    logout()
+    router.push("/")
+  }
+
 
   useEffect(() => {
     if (!loading && !isAuthenticated && !user) {
-      router.push("/login")
+      router.push("/")
     }
   }, [loading, isAuthenticated, router])
 
@@ -28,13 +34,13 @@ const LayoutPage = ({ children }) => {
 
       <nav className='bg-gray-950 w-full px-2 py-3 flex flex-row items-center justify-between mb-2 absolute top-0'>
         <Image src={Logo} className='w-14 ' alt="Logo de digital money app" />
-        <div className='flex  flex-row items-center gap-x-2'>
+        <Link className='flex  flex-row items-center gap-x-2' href="/dashboard">
           <div className='bg-lime-500 rounded-xl px-2 py-1 '>
             TC
           </div>
           <h2 className='text-sm text-lime-400 font-semibold'> Hola ,</h2>
           <h3 className='text-sm text-lime-400 font-semibold'>  {user?.name}  {user?.lastname} </h3>
-        </div>
+        </Link>
       </nav>
 
 
@@ -46,7 +52,7 @@ const LayoutPage = ({ children }) => {
         <Link href="/dashboard/deposit"> Cargar Dinero </Link>
         <Link href="/dashboard/servicios"> Pagar Servicio </Link>
         <Link href="/dashboard/cards"> Tarjetas </Link>
-        <Link href="/"> Cerrar Sesion </Link>
+        <Link href="/" onClick={closeSesion}> Cerrar Sesion </Link>
       </nav>
 
       <div className="col-span-12 md:col-span-8 lg:col-span-9 xl:col-span-7 2xl:col-span-8 mt-14 ">

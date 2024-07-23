@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { createAccesToken } from "@/libs/jwt";
+import { validarEmail } from "@/utils/isValidEmail";
 
 
 export async function POST(request) {
@@ -22,6 +23,11 @@ export async function POST(request) {
 
     if(!isMatch){
         return NextResponse.json(["Credenciales Invalidas"],{status:400})
+    }
+
+    const isValidEmail = validarEmail(email)
+    if(!isValidEmail){
+      return NextResponse.json(["No es un email"],{status:400})
     }
 
     const token = await createAccesToken({ id: userFound._id });

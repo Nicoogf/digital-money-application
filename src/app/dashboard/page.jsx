@@ -1,12 +1,12 @@
 'use client'
 import { useAuth } from '@/context/AuthContext'
 import { useTransaction } from '@/context/TransContext'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-
-
+import { TransactionType } from '@/utils/enum'
 import React, { useEffect, useState } from 'react'
+import { formatDate } from '@/utils/Fechas'
+import { formatCurrency } from '@/utils/VerPrecio'
 
 const DashboarPage = () => {
   const router = useRouter()
@@ -30,7 +30,7 @@ const DashboarPage = () => {
   const filteredElements = elementsWithDate.filter(element =>
     element.details.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const top5RecentElements = filteredElements.slice(0, 5);
+  const top10RecentElements = filteredElements.slice(0, 10);
 
 
 
@@ -38,7 +38,7 @@ const DashboarPage = () => {
     setSearchTerm(e.target.value)
   }
 
-  console.log("Movimientos recientes:", top5RecentElements);
+
   return (
     <>
       <h3 className='w-[80%] max-w-[595px] mx-auto my-6 font-semibold text-lg'> Bienvenido , {user?.name} a Digital Money </h3>
@@ -52,7 +52,7 @@ const DashboarPage = () => {
 
         <div className="ml-4 -mt-3">
           <h3 className='text-sm'> Dinero disponible </h3>
-          <p className='text-4xl font-bold'> $ {user?.dinero}</p>
+          <p className='text-4xl font-bold'> $ { formatCurrency (user?.dinero) }</p>
         </div>
 
       </section>
@@ -76,15 +76,20 @@ const DashboarPage = () => {
             <section className='w-full h-[260px] rounded-md p-2 flex flex-col gap-4 overflow-hidden overflow-y-scroll'>
 
 
-              {top5RecentElements.length > 0 ? (
-              top5RecentElements.map(movimiento => (
+              {top10RecentElements.length > 0 ? (
+              top10RecentElements.map(movimiento => (
 
                 <article key={movimiento._id} className='flex flex-row justify-between items-center bg-gray-700 p-2 rounded-md mb-2'>
                   <div className='flex flex-row items-center gap-x-2'>
-                    <div className={`${movimiento.type === "deposit" ? "bg-lime-500" : "bg-red-500"} rounded-full h-2 w-2`} />
+                    <div className={
+                      `${movimiento.type === TransactionType.DEPOSIT_COMPLETED  || movimiento.type === TransactionType.PAYMENT_RECEIVED ||  movimiento.type === TransactionType.TRANSFER_RECEIVED ? "bg-lime-500" : "bg-red-500"} rounded-full h-2 w-2`} />
                     <h4>{movimiento.details}</h4>
                   </div>
-                  <h4>{movimiento?.type === "pay" || movimiento?.type === "transferir" ? `-${movimiento?.amount}` : `+${movimiento?.amount}`}</h4>
+                  <div className='flex flex-col'>
+                  <h4>{movimiento?.type === TransactionType.PAYMENT_SENT || movimiento?.type === TransactionType.TRANSFER_SENT ? `-$ ${ formatCurrency(movimiento?.amount)}` : `+$ ${formatCurrency(movimiento?.amount)}`}</h4>
+                  <p> {formatDate( movimiento.date )} </p>
+                  </div>
+                  
                 </article>
               ))):(
                 <article> No hay movimientos que coincidan</article>

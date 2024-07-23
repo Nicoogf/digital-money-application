@@ -7,6 +7,7 @@ import { useCard } from '@/context/CardContext'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
+import { formatCurrency } from '@/utils/VerPrecio'
 
 const ConfirmPago = () => {
     const { business, getBusiness, payServices } = useTransaction()
@@ -56,7 +57,7 @@ const ConfirmPago = () => {
                 <h5> {empresaDetail?.companyName} </h5>
                 <div className='flex flex-row'>
                     <h4> Total a Pagar </h4>
-                    <h5> $ {precioRandom} </h5>
+                    <h5> $ { formatCurrency (precioRandom) } </h5>
                 </div>
             </section>
             <form onSubmit={onSubmit} className='bg-gray-950 flex flex-col w-[80%] max-w-[720px] mx-auto p-4 gap-y-2 text-black'>
@@ -69,7 +70,7 @@ const ConfirmPago = () => {
                         {cards.map((card, i) => (
                             <label key={i} class="flex items-center justify-between">
                                 <span class="ml-2 text-gray-700">{card?.name}</span>
-                                <span class="ml-2 text-gray-700">{card?.mount}</span>
+                                <span class="ml-2  text-lime-400"> $ { formatCurrency (card?.mount) }</span>
                                 <input type="radio" id={`rol-${card?.name}`} name="rol" value={card._id} class="hidden-input" {...register("card", { required: true })} />
                             </label>
                         ))}
