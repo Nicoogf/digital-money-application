@@ -7,11 +7,21 @@ import { TransactionType } from '@/utils/enum'
 import React, { useEffect, useState } from 'react'
 import { formatDate } from '@/utils/Fechas'
 import { formatCurrency } from '@/utils/VerPrecio'
+import { FaRegCopy } from 'react-icons/fa'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+import toast, { Toaster } from 'react-hot-toast';
 
 const DashboarPage = () => {
   const router = useRouter()
   const { moves, getMoves } = useTransaction()
   const { user, loading, isAuthenticated } = useAuth()
+  const [ showcbu , setShowCbu ] = useState(false)
+ 
+
+const handleMenu = () => {
+  setShowCbu(!showcbu)
+}
+
 
 
   useEffect(() => {
@@ -43,17 +53,28 @@ const DashboarPage = () => {
     <>
       <h3 className='w-[80%] max-w-[595px] mx-auto my-6 font-semibold text-lg'> Bienvenido , {user?.name} a Digital Money </h3>
 
-      <section className=' w-[80%] max-w-[595px] mx-auto bg-gray-800 rounded-md p-4 mt-2'>
+      <section className=' w-[80%] max-w-[595px] mx-auto bg-gray-800 rounded-md p-4 mt-2 relative overflow-hidden'>
 
         <div className=' flex flex-row justify-end gap-x-4 mr-4 p-2 '>
           <Link href="/dashboard/cards"> Ver tarjetas </Link>
-          <Link href="/cards"> Ver CVU </Link>
+          <button onClick={handleMenu}> Ver CVU </button>
         </div>
 
         <div className="ml-4 -mt-3">
           <h3 className='text-sm'> Dinero disponible </h3>
           <p className='text-4xl font-bold'> $ { formatCurrency (user?.dinero) }</p>
         </div>
+
+        <CopyToClipboard text={user?.cbu}>
+        <div className={`absolute bottom-0 right-0 px-4 py-2 flex flex-row gap-x-2 items-center bg-greenlime text-lime-950 rounded-tl-lg rounded-br-lg  transition-all duration-300 cursor-pointer ${showcbu ? "translate-x-0" : "translate-x-36"}`}
+         onClick={()=> {
+          toast.success("CBU copiado en el Portapapeles")
+          handleMenu()
+          }}>
+          <div> <FaRegCopy  className='text-lime-950'/> </div>
+          <div>  {user?.cbu} </div>          
+        </div>
+        </CopyToClipboard>
 
       </section>
 
@@ -105,6 +126,7 @@ const DashboarPage = () => {
         </section>
 
       </section>
+      <Toaster />
     </>
   )
 }

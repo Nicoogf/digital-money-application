@@ -28,7 +28,8 @@ const CardPage = () => {
 
 
     return (
-        <>
+        <section className='relative'>
+
             <Link 
             href="/dashboard/add-card"className=' w-[80%] max-w-[575px] mx-auto bg-gray-800 rounded-md p-4 mt-2 flex flex-row items-center justify-around py-10'>
                 <div className='flex flex-row items-center gap-x-2'>
@@ -43,10 +44,10 @@ const CardPage = () => {
             <section className='w-[95%] max-w-[575px] mx-auto'>
 
                 <h5 className='my-6'> Tus Tarjetas </h5>
-                <section className='flex flex-col gap-x-4 p-4 h-[450px]'>
+                <section className='flex flex-col gap-x-4 p-4 h-[450px] overflow-hidden overflow-y-auto'>
 
                     {cards.length === 0 ?
-                        <h5> No hay tarjetas ingresadas</h5> :
+                        <h5> No tienes tarjetas asociadas </h5> :
                         cards.map((card, i) => (
                             <article key={i} className='bg-gray-700 rounded-lg flex flex-row items-center justify-between px-6 py-4 w-full'>
                                 <div className='flex flex-row justify-between items-center gap-x-2'>
@@ -65,12 +66,13 @@ const CardPage = () => {
                                     </button>
                                 </div>
                             </article>
-                        ))}
+                    ))}
+
 
                 </section>
                
             </section>
-        </>
+        </section>
     )
 }
 export default CardPage

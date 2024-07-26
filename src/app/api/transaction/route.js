@@ -3,6 +3,7 @@ import User from "@/models/User";
 import { TransactionType } from "@/utils/enum";
 import { MongoDBConnection } from "@/utils/mongobd";
 import { NextResponse } from "next/server";
+import { PDFDocument, rgb } from 'pdf-lib';
 
 
 export async function POST(request) {
@@ -78,8 +79,30 @@ export async function POST(request) {
 
     console.log("EL MOVIMIENTO DEL QUE RECIBE " , receiverMovement)
 
+     // Crear el documento PDF
+     const pdfDoc = await PDFDocument.create();
+     const page = pdfDoc.addPage([600, 400]);
+     const { height } = page.getSize();
+     const fontSize = 12;
+ 
+     page.drawText(`Detalles de la Transacción:`, { x: 50, y: height - 4 * fontSize, size: fontSize + 4, color: rgb(0, 0, 0) });
+     page.drawText(`De: ${userSender.name} (${userSender.email})`, { x: 50, y: height - 6 * fontSize, size: fontSize, color: rgb(0, 0, 0) });
+     page.drawText(`A: ${userReceiver.name} (${userReceiver.alias})`, { x: 50, y: height - 8 * fontSize, size: fontSize, color: rgb(0, 0, 0) });
+     page.drawText(`Monto: ${trans_value}`, { x: 50, y: height - 10 * fontSize, size: fontSize, color: rgb(0, 0, 0) });
+     page.drawText(`Fecha: ${new Date().toLocaleString()}`, { x: 50, y: height - 12 * fontSize, size: fontSize, color: rgb(0, 0, 0) });
+ 
 
-    return NextResponse.json({message: "Envio de dinero Satisfactorio "});
+     const pdfBytes = await pdfDoc.save();
+
+     return new NextResponse(new Blob([pdfBytes], { type: 'application/pdf' }), {
+       status: 200,
+       headers: {
+         'Content-Disposition': 'attachment; filename="transaction.pdf"'
+       }
+     });
+
+
+    // return NextResponse.json({message: "Envio de dinero Satisfactorio "});
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }

@@ -1,6 +1,6 @@
 'use client'
 
-import { loguinRequest, registerRequest , verifyToken } from "@/peticiones/auth";
+import { changePasswordRequest, editUserRequest, forgetPasswordRequest, loguinRequest, registerRequest , verifyToken } from "@/peticiones/auth";
 import { createContext , useState , useContext, useEffect} from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -62,6 +62,32 @@ export const AuthProvider = ({children})=> {
         setUser(null)
     }
 
+    const forgetPassword = async(email) => {
+        try {
+        const res = await forgetPasswordRequest(email)
+        console.log(res)
+        } catch (error) {
+            console.log(error.response.data)
+            setError(error.response.data)
+        }
+    }
+
+    const changePass = async(pass) => {
+        try {
+            const res = await changePasswordRequest(pass)
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const editUser = async (user) => {
+        try {
+            const res = await editUserRequest(user)
+        } catch (error) {
+            console.log(error)
+        }
+    }
   
 
     useEffect(()=> {
@@ -106,7 +132,7 @@ export const AuthProvider = ({children})=> {
     
 
 return(
-    <AuthContext.Provider value={{signUp , user , isAuthenticated , errors , signIn , loading, logout  }}>
+    <AuthContext.Provider value={{signUp , user , isAuthenticated , errors , signIn , loading, logout , forgetPassword ,changePass , editUser}}>
         {children}
     </AuthContext.Provider>
 )

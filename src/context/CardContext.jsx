@@ -1,6 +1,7 @@
 'use client'
 import { createContext, useContext, useState } from "react"
 import { createCardRequest, getCardsRequest, deleteCardRequest, getCardRequest, updateCardRequest } from "@/peticiones/card"
+import { set } from "mongoose"
 const CardContext = createContext()
 
 export const useCard = () => {
@@ -14,13 +15,15 @@ export const useCard = () => {
 export function CardProvider({ children }) {
 
     const [cards, setCard] = useState([])
+    const [ errors , setError ] = useState([])
 
     const createCard = async (card) => {
         try {
             const res = await createCardRequest(card)
             console.log("el res data del context : ", res)
         } catch (error) {
-            console.log(error)
+            setError(error.response.data)
+            console.log(error.response.data)
         }
     }
 
@@ -63,8 +66,9 @@ export function CardProvider({ children }) {
         }
     }
 
+  
     return (
-        <CardContext.Provider value={{ cards, createCard, getCards, deleteCard, getCard, updateCard}}>
+        <CardContext.Provider value={{ cards, createCard, getCards, deleteCard, getCard, updateCard , errors, setError}}>
             {children}
         </CardContext.Provider>
     )

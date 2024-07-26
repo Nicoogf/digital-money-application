@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/context/AuthContext'
 import { useCard } from '@/context/CardContext'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import Cards from 'react-credit-cards-2';
@@ -11,11 +11,11 @@ import 'react-credit-cards-2/dist/es/styles-compiled.css';
 
 const AddCardPage = () => {
 
-    const { user, loading, isAuthenticated } = useAuth()
+    const { user, loading, isAuthenticated , errors: cardsErrors} = useAuth()
     const router = useRouter()
     console.log("El usuario es: ", user, "¿Está cargando? :", loading)
     const { register , handleSubmit } = useForm()
-    const { card , createCard} = useCard()
+    const { card , createCard , errors , setError} = useCard()
     const [ cardComponent , setCardComponent ] = useState({
         number: '',
         expiry: '',
@@ -28,7 +28,7 @@ const AddCardPage = () => {
     const onSubmit = handleSubmit((data)=>{
         console.log(data)
         createCard(data)
-        router.push("/dashboard/cards")
+        router.push("/dashboard/add-card")
     })
 
     const onChange = (e) => {
@@ -37,15 +37,32 @@ const AddCardPage = () => {
             [e.target.name] : e.target.value
         })
     }
-    console.log(cardComponent)
+ 
 
     const handleInputFocus = (e) => {
         setCardComponent((prev) => ({ ...prev, focus: e.target.name }));
       }
 
+      console.log(errors)
+
+      useEffect(()=> {
+        if(errors.length > 0 ){
+           const timer = setTimeout( () => {
+            setError([])
+           },3000)
+           return () => clearTimeout(timer)
+        }
+    },[errors])
+
+
     return (
-        <>
-        <div>
+        <section className=''>
+
+        {errors.map((error, i) => (
+            <div key={i} className='w-full absolute top-0 bg-red-700 text-center '> {error} </div>
+        ))}
+
+        <div className='mt-24'>
         <Cards 
         number={cardComponent.serial} 
         name={cardComponent.proietario}  
@@ -122,7 +139,7 @@ const AddCardPage = () => {
 
             </form>
 
-        </>
+        </section>
     )
 }
 

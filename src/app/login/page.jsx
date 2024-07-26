@@ -80,6 +80,7 @@ const LoginPage = () => {
     const OnSubmit = handleSubmit(async(data) => {
     const res = await signIn(data)
     console.log(res)
+    router.push("/dashboard")
   })
 
   useEffect(() => {
@@ -106,7 +107,7 @@ const LoginPage = () => {
 
 
       <form onSubmit={OnSubmit} 
-      className='border border-gray-700 h-[240px] rounded-md flex flex-col gap-4 bg-slate-800  overflow-hidden relative w-[95%] max-w-[400px] mx-auto set-scrollbar'>
+      className='border border-gray-700 h-[250px] rounded-md flex flex-col gap-4 bg-slate-800  overflow-hidden relative w-[95%] max-w-[400px] mx-auto set-scrollbar'>
 
 
         <div className={`flex flex-col pt-8 transition-all duration-500 mt-5
@@ -138,7 +139,14 @@ const LoginPage = () => {
 
         </div>
 
-        <p className='absolute bottom-2 right-2 text-white text-xs'>¿ No tienes cuenta ? <Link href="/register" className='text-blue-400'> Ingresa aca </Link> </p>
+        <div className='absolute bottom-1 right-1 flex flex-row w-[97%] mx-auto justify-between '>
+        <p className=' text-white text-xs'>¿ No tienes cuenta ? 
+          <Link href="/register" className='text-blue-400'> Ingresa aca </Link> 
+        </p>
+        <Link className='text-blue-400 text-xs' href="/forget-password"> ¿Olvidaste tu Contraseña ? </Link>
+        </div>
+        
+
       </form>
 
     </>

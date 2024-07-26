@@ -20,3 +20,19 @@ export const tacharNumero = (numero)  => {
       // Convertimos la cadena de vuelta a un número y lo devolvemos
       return parseInt(lastFourDigits, 10);
     }
+
+
+    export function maskInput(input) {
+      // Convertir el input a string para manejar números y cadenas de manera uniforme
+      const inputString = input.toString();
+      // Crear una cadena de asteriscos de la misma longitud que el input
+      const maskedString = '*'.repeat(inputString.length);
+      return maskedString;
+  }
+  
+
+  export function splitAlias(alias) {
+    // Dividir el string en un array usando el punto como delimitador
+    const wordsArray = alias.split('.');
+    return wordsArray;
+}

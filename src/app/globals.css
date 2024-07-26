@@ -16,3 +16,46 @@ main{
   background: rgb(2,0,36);
   background: linear-gradient(0deg, rgba(2,0,36,1) 6%, rgba(32,31,32,1) 64%, rgba(34,43,13,1) 100%);
 }
+
+/* Estilo para el contenedor de la paginación */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilo para cada botón de la paginación */
+.pagination li {
+  margin: 0 5px;
+}
+
+/* Estilo para los botones de la paginación */
+.pagination a, .pagination span {
+  display: block;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  color: #0070f3;
+  text-decoration: none;
+}
+
+/* Estilo para el botón activo */
+.pagination .active a {
+  background-color: #0070f3;
+  color: white;
+  border: 1px solid #0070f3;
+}
+
+/* Estilo para el botón deshabilitado */
+.pagination .disabled a {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+
+
+.range{
+  accent-color: #C1FD35 ;
+}

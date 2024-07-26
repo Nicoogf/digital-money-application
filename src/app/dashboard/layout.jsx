@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import Logo from "../../../public/logoverde.png"
-
+import imageProfile from "../../../public/profile.png"
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
 import Link from 'next/link'
@@ -35,11 +35,11 @@ const LayoutPage = ({ children }) => {
       <nav className='bg-gray-950 w-full px-2 py-3 flex flex-row items-center justify-between mb-2 absolute top-0'>
         <Image src={Logo} className='w-14 ' alt="Logo de digital money app" />
         <Link className='flex  flex-row items-center gap-x-2' href="/dashboard">
-          <div className='bg-lime-500 rounded-xl px-2 py-1 '>
-            TC
+          <div>
+            <Image src={imageProfile} alt="Image Profile" className='h-9 w-9 rounded-full'/>
           </div>
           <h2 className='text-sm text-lime-400 font-semibold'> Hola ,</h2>
-          <h3 className='text-sm text-lime-400 font-semibold'>  {user?.name}  {user?.lastname} </h3>
+          <h3 className='text-sm text-lime-400 font-semibold'>{user?.name}  {user?.lastname}</h3>
         </Link>
       </nav>
 
